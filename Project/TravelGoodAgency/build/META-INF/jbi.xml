@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="urn://booktrip" xmlns:ns1="urn://lameduck.ws" xmlns:ns10="http://www.sun.com/jbi/descriptor/service-unit" xmlns:ns2="urn://cheapbird.ws" xmlns:ns3="urn://niceview.ws" xmlns:ns4="urn://cancelTrip.ws" xmlns:ns5="urn://booktrip.ws" xmlns:ns6="http://enterprise.netbeans.org/bpel/TravelGood/CancelTrip" xmlns:ns7="urn://PlanTripService.ws" xmlns:ns8="urn://plantrip.ws" xmlns:ns9="urn://helperservice.ws" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="BookTripPortTypeRole_myRole" interface-name="ns5:BookTripPortType" service-name="ns0:BookTrip">
+            <ns10:display-name>BookTrip</ns10:display-name>
+            <ns10:process-name>BookTrip</ns10:process-name>
+            <ns10:file-path>BookTrip.bpel</ns10:file-path>
+        </provides>
+        <provides endpoint-name="CancelTripPortTypeRole_myRole" interface-name="ns4:CancelTripPortType" service-name="ns6:CancelTrip">
+            <ns10:display-name>CancelTrip</ns10:display-name>
+            <ns10:process-name>CancelTrip</ns10:process-name>
+            <ns10:file-path>CancelTrip.bpel</ns10:file-path>
+        </provides>
+        <provides endpoint-name="callbackFromLameDuck_myRole" interface-name="ns8:CallbackPlanTripPortType" service-name="ns7:LameDuck">
+            <ns10:display-name>LameDuck</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </provides>
+        <provides endpoint-name="callbackFromCheapBird_myRole" interface-name="ns8:CallbackPlanTripPortType" service-name="ns7:CheapBird">
+            <ns10:display-name>CheapBird</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </provides>
+        <provides endpoint-name="callbackFromNiceView_myRole" interface-name="ns8:CallbackPlanTripPortType" service-name="ns7:NiceView">
+            <ns10:display-name>NiceView</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </provides>
+        <provides endpoint-name="PlanTripPortTypeRole_myRole" interface-name="ns8:PlanTripPortType" service-name="ns7:PlanTrip">
+            <ns10:display-name>PlanTrip</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </provides>
+        <consumes endpoint-name="LameDuckPortTypeRole_partnerRole" interface-name="ns1:LameDuckPortType" service-name="ns0:LameDuck">
+            <ns10:display-name>LameDuck</ns10:display-name>
+            <ns10:process-name>BookTrip</ns10:process-name>
+            <ns10:file-path>BookTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="CheapBirdPortTypeRole_partnerRole" interface-name="ns2:CheapBirdPortType" service-name="ns0:CheapBird">
+            <ns10:display-name>CheapBird</ns10:display-name>
+            <ns10:process-name>BookTrip</ns10:process-name>
+            <ns10:file-path>BookTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="NiceViewPortTypeRole_partnerRole" interface-name="ns3:NiceViewPortType" service-name="ns0:NiceView">
+            <ns10:display-name>NiceView</ns10:display-name>
+            <ns10:process-name>BookTrip</ns10:process-name>
+            <ns10:file-path>BookTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="CancelTripPortTypeRole_partnerRole" interface-name="ns4:CancelTripPortType" service-name="ns0:CancelTrip">
+            <ns10:display-name>CancelTrip</ns10:display-name>
+            <ns10:process-name>BookTrip</ns10:process-name>
+            <ns10:file-path>BookTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="LameDuckPortTypeRole_partnerRole" interface-name="ns1:LameDuckPortType" service-name="ns6:LameDuck">
+            <ns10:display-name>LameDuck</ns10:display-name>
+            <ns10:process-name>CancelTrip</ns10:process-name>
+            <ns10:file-path>CancelTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="CheapBirdPortTypeRole_partnerRole" interface-name="ns2:CheapBirdPortType" service-name="ns6:CheapBird">
+            <ns10:display-name>CheapBird</ns10:display-name>
+            <ns10:process-name>CancelTrip</ns10:process-name>
+            <ns10:file-path>CancelTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="NiceViewPortTypeRole_partnerRole" interface-name="ns3:NiceViewPortType" service-name="ns6:NiceView">
+            <ns10:display-name>NiceView</ns10:display-name>
+            <ns10:process-name>CancelTrip</ns10:process-name>
+            <ns10:file-path>CancelTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="callLameDuck_partnerRole" interface-name="ns1:LameDuckPortType" service-name="ns7:LameDuck">
+            <ns10:display-name>LameDuck</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="callCheapBird_partnerRole" interface-name="ns2:CheapBirdPortType" service-name="ns7:CheapBird">
+            <ns10:display-name>CheapBird</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="callNiceView_partnerRole" interface-name="ns3:NiceViewPortType" service-name="ns7:NiceView">
+            <ns10:display-name>NiceView</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </consumes>
+        <consumes endpoint-name="HelperServicePortTypeRole_partnerRole" interface-name="ns9:HelperServicePortType" service-name="ns7:PartnerLink1">
+            <ns10:display-name>PartnerLink1</ns10:display-name>
+            <ns10:process-name>PlanTrip</ns10:process-name>
+            <ns10:file-path>PlanTrip.bpel</ns10:file-path>
+        </consumes>
+    </services>
+</jbi>

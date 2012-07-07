@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="urn://cancelTrip.ws" xmlns:ns10="urn://helperservice.ws" xmlns:ns2="http://enterprise.netbeans.org/bpel/TravelGood/CancelTrip" xmlns:ns3="urn://plantrip.ws" xmlns:ns4="urn://PlanTripService.ws" xmlns:ns5="urn://booktrip.ws" xmlns:ns6="urn://booktrip" xmlns:ns7="urn://lameduck.ws" xmlns:ns8="urn://cheapbird.ws" xmlns:ns9="urn://niceview.ws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/jbi ./jbi.xsd">
+    <service-assembly>
+        <identification>
+            <name>TravelGoodCA</name>
+            <description>Represents the Service Assembly of TravelGoodCA</description>
+        </identification>
+        <service-unit>
+            <identification>
+                <name>TravelGoodCA-TravelGoodAgency</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>TravelGoodAgency.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>TravelGoodCA-sun-http-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-http-binding.jar</artifacts-zip>
+                <component-name>sun-http-binding</component-name>
+            </target>
+        </service-unit>
+        <connections>
+            <connection>
+                <consumer endpoint-name="CancelTripPort" service-name="ns1:CancelTripService"/>
+                <provider endpoint-name="CancelTripPortTypeRole_myRole" service-name="ns2:CancelTrip"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="CallbackPlanTripPortTypeBindingPort" service-name="ns3:CallbackPlanTripService"/>
+                <provider endpoint-name="callbackFromLameDuck_myRole" service-name="ns4:LameDuck"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="PlanTripPort" service-name="ns3:PlanTripService"/>
+                <provider endpoint-name="PlanTripPortTypeRole_myRole" service-name="ns4:PlanTrip"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="BookTripPort" service-name="ns5:BookTripService"/>
+                <provider endpoint-name="BookTripPortTypeRole_myRole" service-name="ns6:BookTrip"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="callLameDuck_partnerRole" service-name="ns4:LameDuck"/>
+                <provider endpoint-name="LameDuckPort" service-name="ns7:LameDuckService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="LameDuckPortTypeRole_partnerRole" service-name="ns2:LameDuck"/>
+                <provider endpoint-name="LameDuckPort" service-name="ns7:LameDuckService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="LameDuckPortTypeRole_partnerRole" service-name="ns6:LameDuck"/>
+                <provider endpoint-name="LameDuckPort" service-name="ns7:LameDuckService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="callCheapBird_partnerRole" service-name="ns4:CheapBird"/>
+                <provider endpoint-name="CheapBirdPort" service-name="ns8:CheapBirdService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="CheapBirdPortTypeRole_partnerRole" service-name="ns2:CheapBird"/>
+                <provider endpoint-name="CheapBirdPort" service-name="ns8:CheapBirdService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="CheapBirdPortTypeRole_partnerRole" service-name="ns6:CheapBird"/>
+                <provider endpoint-name="CheapBirdPort" service-name="ns8:CheapBirdService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="callNiceView_partnerRole" service-name="ns4:NiceView"/>
+                <provider endpoint-name="NiceViewPort" service-name="ns9:NiceViewService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="NiceViewPortTypeRole_partnerRole" service-name="ns2:NiceView"/>
+                <provider endpoint-name="NiceViewPort" service-name="ns9:NiceViewService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="NiceViewPortTypeRole_partnerRole" service-name="ns6:NiceView"/>
+                <provider endpoint-name="NiceViewPort" service-name="ns9:NiceViewService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="CancelTripPortTypeRole_partnerRole" service-name="ns6:CancelTrip"/>
+                <provider endpoint-name="CancelTripPortTypeRole_myRole" service-name="ns2:CancelTrip"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="HelperServicePortTypeRole_partnerRole" service-name="ns4:PartnerLink1"/>
+                <provider endpoint-name="HelperServicePort" service-name="ns10:HelperServiceService"/>
+            </connection>
+        </connections>
+    </service-assembly>
+</jbi>

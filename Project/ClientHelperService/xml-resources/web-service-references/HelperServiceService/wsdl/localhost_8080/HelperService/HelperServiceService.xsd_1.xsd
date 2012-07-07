@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.3.1-hudson-749-SNAPSHOT. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://types.travelgood.ws" targetNamespace="urn://types.travelgood.ws" elementFormDefault="qualified">
+
+    <xsd:complexType name="Flight">
+        <xsd:sequence>
+            <xsd:element name="From" type="xsd:string"></xsd:element>
+            <xsd:element name="To" type="xsd:string"></xsd:element>
+            <xsd:element name="DepartureDate" type="xsd:dateTime"></xsd:element>
+            <xsd:element name="ArrivalDate" type="xsd:dateTime"></xsd:element>
+            <xsd:element name="Carrier" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="FlightInfo">
+        <xsd:sequence>
+            <xsd:element name="BookingNo" type="xsd:string"></xsd:element>
+            <xsd:element name="Price" type="xsd:float"></xsd:element>
+            <xsd:element name="ReservationService" type="xsd:string"></xsd:element>
+            <xsd:element ref="tns:Flight"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="Flight" type="tns:Flight"></xsd:element>
+    <xsd:element name="FlightInfo" type="tns:FlightInfo"></xsd:element>
+    <xsd:complexType name="FlightList">
+        <xsd:sequence>
+            <xsd:element ref="tns:FlightInfo" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>    
+    <xsd:complexType name="Hotel">
+        <xsd:sequence>
+            <xsd:element name="HotelName" type="xsd:string"></xsd:element>
+            <xsd:element name="HotelAddress" type="tns:HotelAddress"></xsd:element>
+            <xsd:element name="HotelBookingNo" type="xsd:string"></xsd:element>
+            <xsd:element name="HotelPrice" type="xsd:float"></xsd:element>
+            <xsd:element name="HotelCreditGurantee" type="xsd:boolean"></xsd:element>
+            <xsd:element name="HotelReservationService" type="xsd:string"></xsd:element>
+
+        </xsd:sequence>
+    </xsd:complexType>    
+    <xsd:complexType name="HotelList">
+        <xsd:sequence maxOccurs="unbounded" minOccurs="1">
+            <xsd:element name="HotelList" type="tns:Hotel" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="HotelAddress">
+        <xsd:sequence>
+            <xsd:element name="Street" type="xsd:string"></xsd:element>
+            <xsd:element name="City" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SearchHotel">
+        <xsd:sequence>
+            <xsd:element name="city" type="xsd:string"></xsd:element>
+            <xsd:element name="ArrivalDate" type="xsd:date"></xsd:element>
+            <xsd:element name="DepartureDate" type="xsd:date"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SearchFlight">
+        <xsd:sequence>
+            <xsd:element name="From" type="xsd:string"></xsd:element>
+            <xsd:element name="To" type="xsd:string"></xsd:element>
+            <xsd:element name="DepartureDate" type="xsd:dateTime"></xsd:element>
+        </xsd:sequence>
+        </xsd:complexType>
+    <xsd:complexType name="FlightItinerary">
+        <xsd:sequence>
+            <xsd:element name="FlightInfo" type="tns:FlightInfo"></xsd:element>
+            <xsd:element name="Confirmation" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="HotelItinerary">
+        <xsd:sequence>
+            <xsd:element name="HotelInfo" type="tns:Hotel"></xsd:element>
+            <xsd:element name="Confirmation" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Itinerary">
+        <xsd:sequence>
+            <xsd:element name="FlightList" type="tns:FlightItinerary" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+            <xsd:element name="HotelList" type="tns:HotelItinerary" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+            <xsd:element name="SessionID" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

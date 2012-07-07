@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/BankService/src/java/BankService.xsd" uri="TravelGoodAgency/src/BankService.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/CheapBird/src/java/WSDL/Flight.xsd" uri="TravelGoodAgency/src/Flight.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/WSDL/Hotel.xsd" uri="TravelGoodAgency/src/Hotel.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/CheapBird/src/java/WSDL/CheapBird.wsdl" uri="TravelGoodAgency/src/CheapBird.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/LameDuck/src/java/WSDL/LameDuck.wsdl" uri="TravelGoodAgency/src/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/WSDL/NiceView.wsdl" uri="TravelGoodAgency/src/NiceView.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/HelperService/src/java/WSDL/HelperService.wsdl" uri="TravelGoodAgency/src/Partners/HelperService/HelperService.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/HelperService/src/java/WSDL/Itinerary.xsd" uri="TravelGoodAgency/src/Partners/HelperService/Itinerary.xsd"/>
+</catalog>

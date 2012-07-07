@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.3.1-hudson-749-SNAPSHOT. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://helperservice.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="urn://types.travelgood.ws" name="HelperService" targetNamespace="urn://helperservice.ws">
+    <types>
+        <xsd:schema xmlns:ns1="urn://types.travelgood.ws" targetNamespace="urn://helperservice.ws">
+            <xsd:import namespace="urn://types.travelgood.ws" schemaLocation="http://localhost:8080/HelperService/HelperServiceService?xsd=1"></xsd:import>
+        </xsd:schema>
+    </types>
+   <message name="startPlanningRequest">
+        <part name="input" type="xsd:string"></part>
+    </message>
+    <message name="startPlanningResponse">
+        <part name="SessionID" type="xsd:string"></part>
+    </message>
+    <message name="getItineraryRequest">
+        <part name="SessionID" type="xsd:string"></part>
+    </message>
+    <message name="getItineraryResponse">
+        <part name="Itinerary" type="ns1:Itinerary"></part>
+    </message>
+    <message name="addFlightToItineraryRequest">
+        <part name="FlightInfo" type="ns1:FlightInfo"></part>
+        <part name="SessionID" type="xsd:string"></part>
+    </message>
+    <message name="addFlightToItineraryResponse">
+        <part name="Status" type="xsd:string"></part>
+    </message>
+    <message name="addHotelToItineraryRequest">
+        <part name="SessionID" type="xsd:string"></part>
+        <part name="Hotel" type="ns1:Hotel"></part>
+    </message>
+    <message name="addHotelToItineraryResponse">
+        <part name="Status" type="xsd:string"></part>
+    </message>
+    <message name="mergeFlightListRequest">
+        <part name="List1" type="ns1:FlightList"></part>
+        <part name="List2" type="ns1:FlightList"></part>
+    </message>
+    <message name="mergeFlightListResponse">
+        <part name="FlightList" type="ns1:FlightList"></part>
+    </message>
+    <portType name="HelperServicePortType">
+         <operation name="startPlanning">
+            <input name="input2" message="tns:startPlanningRequest"></input>
+            <output name="output2" message="tns:startPlanningResponse"></output>
+        </operation>
+        <operation name="getItinerary">
+            <input name="input3" message="tns:getItineraryRequest"></input>
+            <output name="output3" message="tns:getItineraryResponse"></output>
+        </operation>
+         <operation name="addFlightToItinerary">
+            <input name="input1" message="tns:addFlightToItineraryRequest"></input>
+            <output name="output1" message="tns:addFlightToItineraryResponse"></output>
+        </operation>
+        <operation name="addHotelToItinerary">
+            <input name="input4" message="tns:addHotelToItineraryRequest"></input>
+            <output name="output4" message="tns:addHotelToItineraryResponse"></output>
+        </operation>
+        <operation name="mergeFlightList">
+            <input name="input5" message="tns:mergeFlightListRequest"></input>
+            <output name="output5" message="tns:mergeFlightListResponse"></output>
+        </operation>
+    </portType>
+    <binding name="HelperServiceBinding" type="tns:HelperServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+        <operation name="getItinerary">
+            <soap:operation></soap:operation>
+            <input name="input3">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </input>
+            <output name="output3">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </output>
+        </operation>
+        <operation name="addFlightToItinerary">
+            <soap:operation></soap:operation>
+            <input name="input1">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </output>
+        </operation>
+        <operation name="addHotelToItinerary">
+            <soap:operation></soap:operation>
+            <input name="input4">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </input>
+            <output name="output4">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </output>
+        </operation>
+        <operation name="mergeFlightList">
+            <soap:operation></soap:operation>
+            <input name="input5">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </input>
+            <output name="output5">
+                <soap:body use="literal" namespace="urn://helperservice.ws"></soap:body>
+            </output>
+        </operation>
+        <operation name="startPlanning">
+            <soap:operation></soap:operation>
+            <input name="input2">
+                <soap:body namespace="urn://helperservice.ws" use="literal"></soap:body>
+            </input>
+            <output name="output2">
+                <soap:body namespace="urn://helperservice.ws" use="literal"></soap:body>
+            </output>
+        </operation>
+    </binding>
+    <service name="HelperServiceService">
+        <port name="HelperServicePort" binding="tns:HelperServiceBinding">
+            <soap:address location="http://localhost:8080/HelperService/HelperServiceService"></soap:address>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="HelperService">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="HelperServicePortTypeRole" portType="tns:HelperServicePortType"></plnk:role>
+    </plnk:partnerLinkType>
+</definitions>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService_1/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService_1/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/LameDuck/src/java/WSDL/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/LameDuck/src/java/WSDL/Flight.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/Flight.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/PlanTrip.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/PlanTrip.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Itinerary.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Itinerary.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/LameDuck.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/CheapBird.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/CheapBird.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/NiceView.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/NiceView.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Flight.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Flight.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Hotel.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Hotel.xsd"/>
+</catalog>

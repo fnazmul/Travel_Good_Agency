@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="urn://niceview.ws" xmlns:ns10="urn://PlanTripService.ws" xmlns:ns2="urn://cheapbird.ws" xmlns:ns3="urn://lameduck.ws" xmlns:ns4="urn://helperservice.ws" xmlns:ns5="urn://cancelTrip.ws" xmlns:ns6="urn://plantrip.ws" xmlns:ns7="urn://booktrip.ws" xmlns:ns8="urn://booktrip" xmlns:ns9="http://enterprise.netbeans.org/bpel/TravelGood/CancelTrip" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="NiceViewPort" interface-name="ns1:NiceViewPortType" name="endpoint1" service-name="ns1:NiceViewService"/>
+        <endpoint endpoint-name="CheapBirdPort" interface-name="ns2:CheapBirdPortType" name="endpoint2" service-name="ns2:CheapBirdService"/>
+        <endpoint endpoint-name="LameDuckPort" interface-name="ns3:LameDuckPortType" name="endpoint3" service-name="ns3:LameDuckService"/>
+        <endpoint endpoint-name="HelperServicePort" interface-name="ns4:HelperServicePortType" name="endpoint4" service-name="ns4:HelperServiceService"/>
+        <endpoint endpoint-name="CancelTripPort" interface-name="ns5:CancelTripPortType" name="endpoint5" service-name="ns5:CancelTripService"/>
+        <endpoint endpoint-name="CallbackPlanTripPortTypeBindingPort" interface-name="ns6:CallbackPlanTripPortType" name="endpoint6" service-name="ns6:CallbackPlanTripService"/>
+        <endpoint endpoint-name="PlanTripPort" interface-name="ns6:PlanTripPortType" name="endpoint7" service-name="ns6:PlanTripService"/>
+        <endpoint endpoint-name="BookTripPort" interface-name="ns7:BookTripPortType" name="endpoint8" service-name="ns7:BookTripService"/>
+        <endpoint display-name="BookTrip" endpoint-name="BookTripPortTypeRole_myRole" file-path="BookTrip.bpel" interface-name="ns7:BookTripPortType" name="endpoint9" process-name="BookTrip" service-name="ns8:BookTrip"/>
+        <endpoint display-name="CancelTrip" endpoint-name="CancelTripPortTypeRole_myRole" file-path="CancelTrip.bpel" interface-name="ns5:CancelTripPortType" name="endpoint10" process-name="CancelTrip" service-name="ns9:CancelTrip"/>
+        <endpoint display-name="LameDuck" endpoint-name="callbackFromLameDuck_myRole" file-path="PlanTrip.bpel" interface-name="ns6:CallbackPlanTripPortType" name="endpoint11" process-name="PlanTrip" service-name="ns10:LameDuck"/>
+        <endpoint display-name="CheapBird" endpoint-name="callbackFromCheapBird_myRole" file-path="PlanTrip.bpel" interface-name="ns6:CallbackPlanTripPortType" name="endpoint12" process-name="PlanTrip" service-name="ns10:CheapBird"/>
+        <endpoint display-name="NiceView" endpoint-name="callbackFromNiceView_myRole" file-path="PlanTrip.bpel" interface-name="ns6:CallbackPlanTripPortType" name="endpoint13" process-name="PlanTrip" service-name="ns10:NiceView"/>
+        <endpoint display-name="PlanTrip" endpoint-name="PlanTripPortTypeRole_myRole" file-path="PlanTrip.bpel" interface-name="ns6:PlanTripPortType" name="endpoint14" process-name="PlanTrip" service-name="ns10:PlanTrip"/>
+        <endpoint display-name="LameDuck" endpoint-name="LameDuckPortTypeRole_partnerRole" file-path="BookTrip.bpel" interface-name="ns3:LameDuckPortType" name="endpoint15" process-name="BookTrip" service-name="ns8:LameDuck"/>
+        <endpoint display-name="CheapBird" endpoint-name="CheapBirdPortTypeRole_partnerRole" file-path="BookTrip.bpel" interface-name="ns2:CheapBirdPortType" name="endpoint16" process-name="BookTrip" service-name="ns8:CheapBird"/>
+        <endpoint display-name="NiceView" endpoint-name="NiceViewPortTypeRole_partnerRole" file-path="BookTrip.bpel" interface-name="ns1:NiceViewPortType" name="endpoint17" process-name="BookTrip" service-name="ns8:NiceView"/>
+        <endpoint display-name="CancelTrip" endpoint-name="CancelTripPortTypeRole_partnerRole" file-path="BookTrip.bpel" interface-name="ns5:CancelTripPortType" name="endpoint18" process-name="BookTrip" service-name="ns8:CancelTrip"/>
+        <endpoint display-name="LameDuck" endpoint-name="LameDuckPortTypeRole_partnerRole" file-path="CancelTrip.bpel" interface-name="ns3:LameDuckPortType" name="endpoint19" process-name="CancelTrip" service-name="ns9:LameDuck"/>
+        <endpoint display-name="CheapBird" endpoint-name="CheapBirdPortTypeRole_partnerRole" file-path="CancelTrip.bpel" interface-name="ns2:CheapBirdPortType" name="endpoint20" process-name="CancelTrip" service-name="ns9:CheapBird"/>
+        <endpoint display-name="NiceView" endpoint-name="NiceViewPortTypeRole_partnerRole" file-path="CancelTrip.bpel" interface-name="ns1:NiceViewPortType" name="endpoint21" process-name="CancelTrip" service-name="ns9:NiceView"/>
+        <endpoint display-name="LameDuck" endpoint-name="callLameDuck_partnerRole" file-path="PlanTrip.bpel" interface-name="ns3:LameDuckPortType" name="endpoint22" process-name="PlanTrip" service-name="ns10:LameDuck"/>
+        <endpoint display-name="CheapBird" endpoint-name="callCheapBird_partnerRole" file-path="PlanTrip.bpel" interface-name="ns2:CheapBirdPortType" name="endpoint23" process-name="PlanTrip" service-name="ns10:CheapBird"/>
+        <endpoint display-name="NiceView" endpoint-name="callNiceView_partnerRole" file-path="PlanTrip.bpel" interface-name="ns1:NiceViewPortType" name="endpoint24" process-name="PlanTrip" service-name="ns10:NiceView"/>
+        <endpoint display-name="PartnerLink1" endpoint-name="HelperServicePortTypeRole_partnerRole" file-path="PlanTrip.bpel" interface-name="ns4:HelperServicePortType" name="endpoint25" process-name="PlanTrip" service-name="ns10:PartnerLink1"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="TravelGoodAgency.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodCA-TravelGoodAgency" unit-name="TravelGoodAgency" unknown="false" x="135" y="99">
+            <provides endpoint="endpoint9"/>
+            <provides endpoint="endpoint10"/>
+            <provides endpoint="endpoint11"/>
+            <provides endpoint="endpoint12"/>
+            <provides endpoint="endpoint13"/>
+            <provides endpoint="endpoint14"/>
+            <consumes endpoint="endpoint15"/>
+            <consumes endpoint="endpoint16"/>
+            <consumes endpoint="endpoint17"/>
+            <consumes endpoint="endpoint18"/>
+            <consumes endpoint="endpoint19"/>
+            <consumes endpoint="endpoint20"/>
+            <consumes endpoint="endpoint21"/>
+            <consumes endpoint="endpoint22"/>
+            <consumes endpoint="endpoint23"/>
+            <consumes endpoint="endpoint24"/>
+            <consumes endpoint="endpoint25"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="TravelGoodCA-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port x="67" y="592">
+                    <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/CheapBird.wsdl#xpointer(/definitions/service[@name='CheapBirdService']/port[@name='CheapBirdPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+                <port x="67" y="513">
+                    <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/LameDuck.wsdl#xpointer(/definitions/service[@name='LameDuckService']/port[@name='LameDuckPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint3"/>
+                    <provides endpoint="endpoint3"/>
+                </port>
+                <port x="67" y="434">
+                    <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/NiceView.wsdl#xpointer(/definitions/service[@name='NiceViewService']/port[@name='NiceViewPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+                <port x="67" y="39">
+                    <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/service[@name='HelperServiceService']/port[@name='HelperServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint4"/>
+                    <provides endpoint="endpoint4"/>
+                </port>
+                <port x="67" y="355">
+                    <link xlink:href="../jbiServiceUnits/TravelGoodAgency/BookTrip.wsdl#xpointer(/definitions/service[@name='BookTripService']/port[@name='BookTripPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint8"/>
+                    <provides endpoint="endpoint8"/>
+                </port>
+                <port x="67" y="276">
+                    <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CancelTrip.wsdl#xpointer(/definitions/service[@name='CancelTripService']/port[@name='CancelTripPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint5"/>
+                    <provides endpoint="endpoint5"/>
+                </port>
+                <port x="67" y="197">
+                    <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/service[@name='PlanTripService']/port[@name='PlanTripPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint7"/>
+                    <provides endpoint="endpoint7"/>
+                </port>
+                <port x="67" y="118">
+                    <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/service[@name='CallbackPlanTripService']/port[@name='CallbackPlanTripPortTypeBindingPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint6"/>
+                    <provides endpoint="endpoint6"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint5" provider="endpoint10" state="unchanged"/>
+        <connection consumer="endpoint6" provider="endpoint11" state="unchanged"/>
+        <connection consumer="endpoint7" provider="endpoint14" state="unchanged"/>
+        <connection consumer="endpoint8" provider="endpoint9" state="unchanged"/>
+        <connection consumer="endpoint22" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint19" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint15" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint23" provider="endpoint2" state="unchanged"/>
+        <connection consumer="endpoint20" provider="endpoint2" state="unchanged"/>
+        <connection consumer="endpoint16" provider="endpoint2" state="unchanged"/>
+        <connection consumer="endpoint24" provider="endpoint1" state="unchanged"/>
+        <connection consumer="endpoint21" provider="endpoint1" state="unchanged"/>
+        <connection consumer="endpoint17" provider="endpoint1" state="unchanged"/>
+        <connection consumer="endpoint18" provider="endpoint10" state="unchanged"/>
+        <connection consumer="endpoint25" provider="endpoint4" state="unchanged"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/CheapBird.wsdl#xpointer(/definitions/portType[@name='CheapBirdPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/LameDuck.wsdl#xpointer(/definitions/portType[@name='LameDuckPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/NiceView.wsdl#xpointer(/definitions/portType[@name='NiceViewPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/portType[@name='HelperServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/BookTrip.wsdl#xpointer(/definitions/portType[@name='BookTripPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CancelTrip.wsdl#xpointer(/definitions/portType[@name='CancelTripPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CheapBird.wsdl#xpointer(/definitions/portType[@name='CheapBirdPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/LameDuck.wsdl#xpointer(/definitions/portType[@name='LameDuckPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/NiceView.wsdl#xpointer(/definitions/portType[@name='NiceViewPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/portType[@name='HelperServicePortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/portType[@name='PlanTripPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/portType[@name='CallbackPlanTripPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/CheapBird.wsdl#xpointer(/definitions/binding[@name='CheapBirdBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/LameDuck.wsdl#xpointer(/definitions/binding[@name='LameDuckBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/NiceView.wsdl#xpointer(/definitions/binding[@name='NiceViewBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/binding[@name='HelperServiceBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/BookTrip.wsdl#xpointer(/definitions/binding[@name='BookTripBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CancelTrip.wsdl#xpointer(/definitions/binding[@name='CancelTripBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CheapBird.wsdl#xpointer(/definitions/binding[@name='CheapBirdBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/LameDuck.wsdl#xpointer(/definitions/binding[@name='LameDuckBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/NiceView.wsdl#xpointer(/definitions/binding[@name='NiceViewBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/binding[@name='HelperServiceBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/binding[@name='PlanTripBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/binding[@name='CallbackPlanTripPortTypeBinding'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/CheapBird.wsdl#xpointer(/definitions/service[@name='CheapBirdService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/LameDuck.wsdl#xpointer(/definitions/service[@name='LameDuckService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/NiceView.wsdl#xpointer(/definitions/service[@name='NiceViewService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/TravelGoodAgency/src/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/service[@name='HelperServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/BookTrip.wsdl#xpointer(/definitions/service[@name='BookTripService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CancelTrip.wsdl#xpointer(/definitions/service[@name='CancelTripService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/CheapBird.wsdl#xpointer(/definitions/service[@name='CheapBirdService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/LameDuck.wsdl#xpointer(/definitions/service[@name='LameDuckService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/NiceView.wsdl#xpointer(/definitions/service[@name='NiceViewService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/Partners/HelperService/HelperService.wsdl#xpointer(/definitions/service[@name='HelperServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/service[@name='PlanTripService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodAgency/PlanTrip.wsdl#xpointer(/definitions/service[@name='CallbackPlanTripService'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

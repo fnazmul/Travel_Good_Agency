@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/hub/ws/projects/examples/WSDL/EchoWithFault/src/java/echoWithFault.wsdl" uri="src/conf/xml-resources/web-services/EchoWithFaultImpl/wsdl/echoWithFault.wsdl"/>
+</catalog>

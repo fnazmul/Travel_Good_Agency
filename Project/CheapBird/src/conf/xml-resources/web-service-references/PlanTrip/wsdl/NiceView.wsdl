@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="NiceView" targetNamespace="urn://niceview.ws"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="urn://types.niceview.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn://niceview.ws">
+    <types>
+        <xsd:schema targetNamespace="urn://niceview.ws">
+            <xsd:import namespace="urn://types.niceview.ws" schemaLocation="Hotel.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="getHotelsRequest">
+        <part name="searchInfo" type="ns:SearchHotel"/>
+        <part name="sessionID" type="xsd:string"/>
+    </message>
+    <message name="bookHotelRequest">
+        <part name="bookingNum" type="xsd:string"/>
+        <part name="creditCardInfo" type="ns:creditCardInfoType"/>
+    </message>
+    <message name="bookHotelResponse">
+        <part name="bookingStatus" type="xsd:boolean"/>
+    </message>
+    <message name="cancelHotelRequest">
+        <part name="bookingNum" type="xsd:string"/>
+    </message>
+    <message name="cancelHotelResponse">
+        <part name="cancelStatus" type="xsd:boolean"/>
+    </message>
+    <portType name="NiceViewPortType">
+        <operation name="getHotels">
+            <input name="input1" message="tns:getHotelsRequest"/>
+        </operation>
+        <operation name="bookHotel">
+            <input name="input2" message="tns:bookHotelRequest"/>
+            <output name="output1" message="tns:bookHotelResponse"/>
+        </operation>
+        <operation name="cancelHotel">
+            <input name="input3" message="tns:cancelHotelRequest"/>
+            <output name="output2" message="tns:cancelHotelResponse"/>
+        </operation>
+    </portType>
+    <binding name="NiceViewBinding" type="tns:NiceViewPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getHotels">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="urn://niceview.ws"/>
+            </input>
+        </operation>
+        <operation name="bookHotel">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body namespace="urn://niceview.ws" use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="urn://niceview.ws"/>
+            </output>
+        </operation>
+        <operation name="cancelHotel">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body use="literal" namespace="urn://niceview.ws"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="urn://niceview.ws"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="NiceViewService">
+        <port name="NiceViewPort" binding="tns:NiceViewBinding">
+            <soap:address location="http://localhost:8080/NiceViewService/NiceViewPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="NiceView">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="NiceViewPortTypeRole" portType="tns:NiceViewPortType"/>
+    </plnk:partnerLinkType>
+</definitions>

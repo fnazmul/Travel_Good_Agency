@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/BankService/src/java/BankService.xsd" uri="src/BankService.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/CheapBird/src/java/WSDL/Flight.xsd" uri="src/Flight.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/WSDL/Hotel.xsd" uri="src/Hotel.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/CheapBird/src/java/WSDL/CheapBird.wsdl" uri="src/CheapBird.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/LameDuck/src/java/WSDL/LameDuck.wsdl" uri="src/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/WSDL/NiceView.wsdl" uri="src/NiceView.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/HelperService/src/java/WSDL/HelperService.wsdl" uri="src/Partners/HelperService/HelperService.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/HelperService/src/java/WSDL/Itinerary.xsd" uri="src/Partners/HelperService/Itinerary.xsd"/>
+</catalog>

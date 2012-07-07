@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="CancelTrip" targetNamespace="urn://cancelTrip.ws"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://cancelTrip.ws" xmlns:ns="urn://types.fastmoney.imm.dtu.dk" xmlns:ns0="urn://types.travelgood.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="urn://cancelTrip.ws" xmlns:ns="urn://types.fastmoney.imm.dtu.dk">
+            <xsd:import namespace="urn://types.fastmoney.imm.dtu.dk" schemaLocation="BankService.xsd"/>
+            <xsd:import namespace="urn://types.travelgood.ws" schemaLocation="Itinerary.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="cancelItineraryRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="customerInfo" type="ns:creditCardInfoType"/>
+        <part name="inputItinerary" type="ns0:Itinerary"/>
+    </message>
+    <message name="cancelItineraryResponse">
+        <part name="status" type="xsd:boolean"/>
+        <part name="outItinerary" type="ns0:Itinerary"/>
+    </message>
+    <portType name="CancelTripPortType">
+        <operation name="cancelItinerary">
+            <input name="input1" message="tns:cancelItineraryRequest"/>
+            <output name="output1" message="tns:cancelItineraryResponse"/>
+        </operation>
+    </portType>
+    <binding name="CancelTripBinding" type="tns:CancelTripPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="cancelItinerary">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="urn://cancelTrip.ws"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="urn://cancelTrip.ws"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="CancelTripService">
+        <port name="CancelTripPort" binding="tns:CancelTripBinding">
+            <soap:address location="http://localhost:9080/CancelTripService/CancelTripPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="CancelTrip">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="CancelTripPortTypeRole" portType="tns:CancelTripPortType"/>
+    </plnk:partnerLinkType>
+</definitions>

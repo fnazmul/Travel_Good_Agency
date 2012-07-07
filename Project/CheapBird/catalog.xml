@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/D:/Study/_Software%20Development%20for%20Web%20Services/Travel%20Good/CheapBird/src/java/WSDL/CheapBird.wsdl" uri="src/conf/xml-resources/web-services/CheapBird/wsdl/CheapBird.wsdl"/>
+    <system systemId="file:/D:/Study/_Software%20Development%20for%20Web%20Services/Travel%20Good/CheapBird/src/java/WSDL/Flight.xsd" uri="src/conf/xml-resources/web-services/CheapBird/wsdl/Flight.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/PlanTrip.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/PlanTrip.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Itinerary.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Itinerary.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/LameDuck.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/CheapBird.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/CheapBird.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/NiceView.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/NiceView.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Flight.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Flight.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Hotel.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Hotel.xsd"/>
+</catalog>

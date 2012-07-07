@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="echoWithFault" targetNamespace="urn:echowithfault"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:echowithfault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="urn:echowithfault" xmlns:tns="http://j2ee.netbeans.org/wsdl/EchoWithFault/echoWithFault">
+            <xsd:element name="faultElement" type="xsd:string"></xsd:element>
+            <xsd:element name="input" type="xsd:string"></xsd:element>
+            <xsd:element name="output" type="xsd:string"></xsd:element>
+        </xsd:schema>
+        <xsd:schema targetNamespace="http://xml.netbeans.org/schema/newXMLSchema" xmlns:tns1="http://xml.netbeans.org/schema/newXMLSchema">
+            <xsd:attribute name="age" type="xsd:int"/>
+            <xsd:element name="Address">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Street" type="xsd:string"></xsd:element>
+                        <xsd:element name="Postcode" type="xsd:int"></xsd:element>
+                        <xsd:element name="City" type="xsd:string"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:attribute name="FirstName" type="xsd:string"/>
+            <xsd:attribute name="LastName" type="xsd:string"/>
+            <xsd:attribute name="Phone" type="xsd:int"/>
+            <xsd:complexType name="Person">
+                <xsd:sequence>
+                    <xsd:element ref="tns1:Address"/>
+                </xsd:sequence>
+                <xsd:attribute ref="tns1:FirstName"/>
+                <xsd:attribute ref="tns1:LastName"/>
+                <xsd:attribute ref="tns1:Phone"/>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="echoRequest">
+        <part name="part1" element="tns:input"/>
+    </message>
+    <message name="echoResponse">
+        <part name="part2" element="tns:output"/>
+    </message>
+    <message name="echoFault">
+        <part name="part3" element="tns:faultElement"/>
+    </message>
+    <portType name="echoWithFaultPortType">
+        <operation name="echo">
+            <input name="input1" message="tns:echoRequest"/>
+            <output name="output1" message="tns:echoResponse"/>
+            <fault name="fault1" message="tns:echoFault"/>
+        </operation>
+    </portType>
+    <binding name="echoWithFaultBinding" type="tns:echoWithFaultPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="echo">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="echoWithFaultService">
+        <port name="echoWithFaultPort" binding="tns:echoWithFaultBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/service"/>
+        </port>
+    </service>
+</definitions>
+
+
+
+
+
+

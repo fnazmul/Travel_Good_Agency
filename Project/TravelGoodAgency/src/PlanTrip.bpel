@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="PlanTrip"
+    targetNamespace="urn://PlanTripService.ws"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:tns="urn://PlanTripService.ws" xmlns:ns0="urn://plantrip.ws" xmlns:ns1="urn://helperservice.ws" xmlns:ns2="urn://cheapbird.ws" xmlns:ns3="urn://lameduck.ws" xmlns:ns4="urn://types.travelgood.ws" xmlns:ns5="urn://types.airlinereservation.ws" xmlns:ns6="urn://niceview.ws" xmlns:ns7="urn://types.niceview.ws">
+    <import namespace="urn://plantrip.ws" location="PlanTrip.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://lameduck.ws" location="LameDuck.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://cheapbird.ws" location="CheapBird.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://niceview.ws" location="NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://helperservice.ws" location="Partners/HelperService/HelperService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="LameDuck" xmlns:tns="urn://plantrip.ws" partnerLinkType="tns:PlanTrip_LameDuck" myRole="callbackFromLameDuck" partnerRole="callLameDuck"/>
+        <partnerLink name="CheapBird" xmlns:tns="urn://plantrip.ws" partnerLinkType="tns:PlanTrip_CheapBird" myRole="callbackFromCheapBird" partnerRole="callCheapBird"/>
+        <partnerLink name="NiceView" partnerLinkType="ns0:PlanTrip_NiceView" myRole="callbackFromNiceView" partnerRole="callNiceView"/>
+        <partnerLink name="PartnerLink1" partnerLinkType="ns1:HelperService" partnerRole="HelperServicePortTypeRole"/>
+        <partnerLink name="PlanTrip" xmlns:tns="urn://plantrip.ws" partnerLinkType="tns:PlanTrip" myRole="PlanTripPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="AddFlightToItineraryOut" messageType="ns0:addFlightToItineraryResponse"/>
+        <variable name="HelperAddFlightToItineraryOut" messageType="ns1:addFlightToItineraryResponse"/>
+        <variable name="HelperAddFlightToItineraryIn" messageType="ns1:addFlightToItineraryRequest"/>
+        <variable name="AddHotelToItineraryOut" messageType="ns0:addHotelToItineraryResponse"/>
+        <variable name="HelperAddHotelToItineraryOut" messageType="ns1:addHotelToItineraryResponse"/>
+        <variable name="HelperAddHotelToItineraryIn" messageType="ns1:addHotelToItineraryRequest"/>
+        <variable name="getHotelsOut" messageType="ns0:getHotelsResponse"/>
+        <variable name="HotelListNiceViewIn" messageType="ns0:hotelListNiceViewRequest"/>
+        <variable name="getNiceViewHotelsIn" messageType="ns6:getHotelsRequest"/>
+        <variable name="GetItineraryOut" messageType="ns0:getItineraryResponse"/>
+        <variable name="getItineraryHelperOut" messageType="ns1:getItineraryResponse"/>
+        <variable name="getItineraryHelperIn" messageType="ns1:getItineraryRequest"/>
+        <variable name="getFlightsOut" messageType="ns0:getFlightsResponse"/>
+        <variable name="mergeFlightListOut" messageType="ns1:mergeFlightListResponse"/>
+        <variable name="mergeListIn" messageType="ns1:mergeFlightListRequest"/>
+        <variable name="FlightListCheapBirdIn" messageType="ns0:flightListCheapBirdRequest"/>
+        <variable name="FlightListLameDuckIn" messageType="ns0:flightListLameDuckRequest"/>
+        <variable name="getFlightsLameDuck" messageType="ns3:getFlightsRequest"/>
+        <variable name="getFlightsCheapBird" messageType="ns2:getFlightsRequest"/>
+        <variable name="GetItineraryIn" messageType="ns0:getItineraryRequest"/>
+        <variable name="AddHotelToItineraryIn" messageType="ns0:addHotelToItineraryRequest"/>
+        <variable name="GetHotelsIn" messageType="ns0:getHotelsRequest"/>
+        <variable name="AddFlightToItineraryIn" messageType="ns0:addFlightToItineraryRequest"/>
+        <variable name="GetFlightsIn" messageType="ns0:getFlightsRequest"/>
+        <variable name="Session" type="xsd:boolean"/>
+        <variable name="startPlanningOut" messageType="ns0:startPlanningResponse"/>
+        <variable name="StartPlanningHelperOut" messageType="ns1:startPlanningResponse"/>
+        <variable name="startPlanningHelperIn" messageType="ns1:startPlanningRequest"/>
+        <variable name="StartPlanningIn" messageType="ns0:startPlanningRequest"/>
+    </variables>
+    <correlationSets>
+        <correlationSet name="Session" properties="ns0:sessionID"/>
+    </correlationSets>
+    <sequence>
+        <receive name="startPlanning" createInstance="yes" partnerLink="PlanTrip" operation="startPlanning" portType="ns0:PlanTripPortType" variable="StartPlanningIn"/>
+        <assign name="dummyIn">
+            <copy>
+                <from variable="StartPlanningIn" part="input"/>
+                <to variable="startPlanningHelperIn" part="input"/>
+            </copy>
+        </assign>
+        <invoke name="getSessionID" partnerLink="PartnerLink1" operation="startPlanning" portType="ns1:HelperServicePortType" inputVariable="startPlanningHelperIn" outputVariable="StartPlanningHelperOut"/>
+        <assign name="AssignSessionID">
+            <copy>
+                <from variable="StartPlanningHelperOut" part="SessionID"/>
+                <to variable="startPlanningOut" part="sessionID"/>
+            </copy>
+        </assign>
+        <assign name="startSession">
+            <copy>
+                <from>true()</from>
+                <to variable="Session"/>
+            </copy>
+        </assign>
+        <reply name="ReplySessionID" partnerLink="PlanTrip" operation="startPlanning" portType="ns0:PlanTripPortType" variable="startPlanningOut">
+            <correlations>
+                <correlation set="Session" initiate="yes"/>
+            </correlations>
+        </reply>
+        <while name="WhileSession">
+            <condition>$Session</condition>
+            <pick name="ClientPick">
+                <onMessage partnerLink="PlanTrip" operation="getFlights" portType="ns0:PlanTripPortType" variable="GetFlightsIn">
+                    <correlations>
+                        <correlation set="Session" initiate="no"/>
+                    </correlations>
+                    <sequence name="getFlights">
+                        <assign name="AssignSearchFlight">
+                            <copy>
+                                    <from variable="GetFlightsIn" part="sessionID"/>
+                                        <to variable="getFlightsLameDuck" part="SessionID"/>
+                                </copy>
+                                <copy>
+                                    <from variable="GetFlightsIn" part="sessionID"/>
+                                        <to variable="getFlightsCheapBird" part="SessionID"/>
+                                </copy>
+                            <copy>
+                                <from>$GetFlightsIn.searchFlight/ns4:From</from>
+                                <to>$getFlightsLameDuck.SearchFlight/ns5:From</to>
+                            </copy>
+                            <copy>
+                                <from>$GetFlightsIn.searchFlight/ns4:To</from>
+                                <to>$getFlightsLameDuck.SearchFlight/ns5:To</to>
+                            </copy>
+                            <copy>
+                                <from>$GetFlightsIn.searchFlight/ns4:DepartureDate</from>
+                                <to>$getFlightsLameDuck.SearchFlight/ns5:DepartureDate</to>
+                            </copy>
+                            <copy>
+                                <from>$GetFlightsIn.searchFlight/ns4:From</from>
+                                <to>$getFlightsCheapBird.SearchFlight/ns5:From</to>
+                            </copy>
+                            <copy>
+                                <from>$GetFlightsIn.searchFlight/ns4:To</from>
+                                <to>$getFlightsCheapBird.SearchFlight/ns5:To</to>
+                            </copy>
+                            <copy>
+                                <from>$GetFlightsIn.searchFlight/ns4:DepartureDate</from>
+                                <to>$getFlightsCheapBird.SearchFlight/ns5:DepartureDate</to>
+                            </copy>
+                        </assign>
+                        <flow name="InvokeGetFlights">
+                            <sequence name="LameDuck">
+                                <invoke name="getFlightsLameDuck" partnerLink="LameDuck" operation="getFlights" portType="ns3:LameDuckPortType" inputVariable="getFlightsLameDuck"/>
+                                <pick name="waitLameDuck">
+                                    <onMessage partnerLink="LameDuck" operation="flightListLameDuck" portType="ns0:CallbackPlanTripPortType" variable="FlightListLameDuckIn">
+                                        <correlations>
+                                            <correlation set="Session" initiate="no"/>
+                                        </correlations>
+                                        <sequence name="callbackList1">
+                                            <empty name="Empty1"/>
+                                            <assign name="flightList1">
+                                                <copy>
+                                                    <from variable="FlightListLameDuckIn" part="flightListLameDuck"/>
+                                                    <to variable="mergeListIn" part="List1"/>
+                                                </copy>
+                                            </assign>
+                                        </sequence>
+                                    </onMessage>
+                                    <onAlarm>
+                                        <for>'P0Y0M0DT0H0M5S'</for>
+                                        <assign name="AssignEmpty1">
+                                            <copy>
+                                                <from>'none'</from>
+                                                <to>$mergeListIn.List1/ns4:FlightInfo/ns4:ReservationService</to>
+                                            </copy>
+                                        </assign>
+                                    </onAlarm>
+                                </pick>
+                            </sequence>
+                            <sequence name="CheapBird">
+                                <invoke name="getFlightsCheapBird" partnerLink="CheapBird" operation="getFlights" portType="ns2:CheapBirdPortType" inputVariable="getFlightsCheapBird"/>
+                                <pick name="waitCheapBird">
+                                    <onMessage partnerLink="CheapBird" operation="flightListCheapBird" portType="ns0:CallbackPlanTripPortType" variable="FlightListCheapBirdIn">
+                                        <correlations>
+                                            <correlation set="Session" initiate="no"/>
+                                        </correlations>
+                                        <sequence name="callbackList2">
+                                            <empty name="Empty2"/>
+                                            <assign name="flightList2">
+                                                <copy>
+                                                    <from variable="FlightListCheapBirdIn" part="flightListCheapBird"/>
+                                                    <to variable="mergeListIn" part="List2"/>
+                                                </copy>
+                                            </assign>
+                                        </sequence>
+                                    </onMessage>
+                                    <onAlarm>
+                                        <for>'P0Y0M0DT0H0M5S'</for>
+                                        <assign name="AssignEmpty2">
+                                            <copy>
+                                                <from>'none'</from>
+                                                <to>$mergeListIn.List2/ns4:FlightInfo/ns4:ReservationService</to>
+                                            </copy>
+                                        </assign>
+                                    </onAlarm>
+                                </pick>
+                            </sequence>
+                        </flow>
+                        <invoke name="mergeList" partnerLink="PartnerLink1" operation="mergeFlightList" portType="ns1:HelperServicePortType" inputVariable="mergeListIn" outputVariable="mergeFlightListOut"/>
+                        <assign name="AssignFlightList">
+                            <copy>
+                                <from variable="mergeFlightListOut" part="FlightList"/>
+                                <to variable="getFlightsOut" part="flightList"/>
+                            </copy>
+                            <copy>
+                                <from>$mergeFlightListOut.FlightList/ns4:FlightInfo</from>
+                                <to>$getFlightsOut.flightList/ns4:FlightInfo</to>
+                            </copy>
+                        </assign>
+                        <reply name="ReplyGetFlights" partnerLink="PlanTrip" operation="getFlights" portType="ns0:PlanTripPortType" variable="getFlightsOut"/>
+                    </sequence>
+                </onMessage>
+                <onMessage partnerLink="PlanTrip" operation="addFlightToItinerary" portType="ns0:PlanTripPortType" variable="AddFlightToItineraryIn">
+                    <correlations>
+                        <correlation set="Session" initiate="no"/>
+                    </correlations>
+                    <sequence name="addFlightToItinerary">
+                        <assign name="AssignFlightToItinerary">
+                            <copy>
+                                    <from variable="AddFlightToItineraryIn" part="sessionID"/>
+                                        <to variable="HelperAddFlightToItineraryIn" part="SessionID"/>
+                                </copy>
+                                <copy>
+                                    <from variable="AddFlightToItineraryIn" part="flightInfo"/>
+                                        <to variable="HelperAddFlightToItineraryIn" part="FlightInfo"/>
+                                </copy>
+                        </assign>
+                        <invoke name="HelperAddFlightToItinerary" partnerLink="PartnerLink1" operation="addFlightToItinerary" portType="ns1:HelperServicePortType" inputVariable="HelperAddFlightToItineraryIn" outputVariable="HelperAddFlightToItineraryOut"/>
+                        <assign name="AddFlightStatus">
+                            <copy>
+                                <from variable="HelperAddFlightToItineraryOut" part="Status"/>
+                                <to variable="AddFlightToItineraryOut" part="status"/>
+                            </copy>
+                        </assign>
+                        <reply name="ReplyAddFlightToItinerary" partnerLink="PlanTrip" operation="addFlightToItinerary" portType="ns0:PlanTripPortType" variable="AddFlightToItineraryOut"/>
+                    </sequence>
+                </onMessage>
+                <onMessage partnerLink="PlanTrip" operation="getHotels" portType="ns0:PlanTripPortType" variable="GetHotelsIn">
+                    <correlations>
+                        <correlation set="Session" initiate="no"/>
+                    </correlations>
+                    <sequence name="NiceView">
+                        <assign name="AssignSearchHotel">
+                            <copy>
+                                    <from variable="GetHotelsIn" part="sessionID"/>
+                                        <to variable="getNiceViewHotelsIn" part="sessionID"/>
+                                </copy>
+                            <copy>
+                                <from>$GetHotelsIn.searchHotel/ns4:city</from>
+                                <to>$getNiceViewHotelsIn.searchInfo/ns7:city</to>
+                            </copy>
+                            <copy>
+                                <from>$GetHotelsIn.searchHotel/ns4:ArrivalDate</from>
+                                <to>$getNiceViewHotelsIn.searchInfo/ns7:ArrivalDate</to>
+                            </copy>
+                            <copy>
+                                <from>$GetHotelsIn.searchHotel/ns4:DepartureDate</from>
+                                <to>$getNiceViewHotelsIn.searchInfo/ns7:DepartureDate</to>
+                            </copy>
+                        </assign>
+                        <invoke name="getNiceViewHotel" partnerLink="NiceView" operation="getHotels" portType="ns6:NiceViewPortType" inputVariable="getNiceViewHotelsIn"/>
+                        <pick name="waitNiceView">
+                            <onMessage partnerLink="NiceView" operation="hotelListNiceView" portType="ns0:CallbackPlanTripPortType" variable="HotelListNiceViewIn">
+                                <correlations>
+                                    <correlation set="Session" initiate="no"/>
+                                </correlations>
+                                <sequence name="callbackHotelList">
+                                    <empty name="Empty3"/>
+                                    <assign name="hotelList">
+                                        <copy>
+                                            <from>$HotelListNiceViewIn.hotelListNiceView/ns4:HotelList</from>
+                                            <to>$getHotelsOut.hotelList/ns4:HotelList</to>
+                                        </copy>
+                                    </assign>
+                                </sequence>
+                            </onMessage>
+                            <onAlarm>
+                                <for>'P0Y0M0DT0H0M5S'</for>
+                                <assign name="AssignEmptyHotel">
+                                    <copy>
+                                        <from>'none'</from>
+                                        <to>$getHotelsOut.hotelList/ns4:HotelList/ns4:HotelReservationService</to>
+                                    </copy>
+                                </assign>
+                            </onAlarm>
+                        </pick>
+                        <reply name="ReplygetHotels" partnerLink="PlanTrip" operation="getHotels" portType="ns0:PlanTripPortType" variable="getHotelsOut"/>
+                    </sequence>
+                </onMessage>
+                <onMessage partnerLink="PlanTrip" operation="addHotelToItinerary" portType="ns0:PlanTripPortType" variable="AddHotelToItineraryIn">
+                    <correlations>
+                        <correlation set="Session" initiate="no"/>
+                    </correlations>
+                    <sequence name="addHotelToItinerary">
+                        <assign name="AssignHotelToItinerary">
+                            <copy>
+                                    <from variable="AddHotelToItineraryIn" part="sessionID"/>
+                                        <to variable="HelperAddHotelToItineraryIn" part="SessionID"/>
+                                </copy>
+                            <copy>
+                                <from>$AddHotelToItineraryIn.hotel/ns4:HotelName</from>
+                                <to>$HelperAddHotelToItineraryIn.Hotel/ns4:HotelName</to>
+                            </copy>
+                            <copy>
+                                <from>$AddHotelToItineraryIn.hotel/ns4:HotelAddress</from>
+                                <to>$HelperAddHotelToItineraryIn.Hotel/ns4:HotelAddress</to>
+                            </copy>
+                            <copy>
+                                <from>$AddHotelToItineraryIn.hotel/ns4:HotelBookingNo</from>
+                                <to>$HelperAddHotelToItineraryIn.Hotel/ns4:HotelBookingNo</to>
+                            </copy>
+                            <copy>
+                                <from>$AddHotelToItineraryIn.hotel/ns4:HotelPrice</from>
+                                <to>$HelperAddHotelToItineraryIn.Hotel/ns4:HotelPrice</to>
+                            </copy>
+                            <copy>
+                                <from>$AddHotelToItineraryIn.hotel/ns4:HotelCreditGurantee</from>
+                                <to>$HelperAddHotelToItineraryIn.Hotel/ns4:HotelCreditGurantee</to>
+                            </copy>
+                            <copy>
+                                <from>$AddHotelToItineraryIn.hotel/ns4:HotelReservationService</from>
+                                <to>$HelperAddHotelToItineraryIn.Hotel/ns4:HotelReservationService</to>
+                            </copy>
+                        </assign>
+                        <invoke name="HelperAddHotelToItinerary" partnerLink="PartnerLink1" operation="addHotelToItinerary" portType="ns1:HelperServicePortType" inputVariable="HelperAddHotelToItineraryIn" outputVariable="HelperAddHotelToItineraryOut"/>
+                        <assign name="AddHotelStatus">
+                            <copy>
+                                <from variable="HelperAddHotelToItineraryOut" part="Status"/>
+                                <to variable="AddHotelToItineraryOut" part="status"/>
+                            </copy>
+                        </assign>
+                        <reply name="ReplyAddHotelToItinerary" partnerLink="PlanTrip" operation="addHotelToItinerary" portType="ns0:PlanTripPortType" variable="AddHotelToItineraryOut"/>
+                    </sequence>
+                </onMessage>
+                <onMessage partnerLink="PlanTrip" operation="getItinerary" portType="ns0:PlanTripPortType" variable="GetItineraryIn">
+                    <correlations>
+                        <correlation set="Session" initiate="no"/>
+                    </correlations>
+                    <sequence name="getItinerary">
+                        <assign name="ItSessionID">
+                            <copy>
+                                    <from variable="GetItineraryIn" part="sessionID"/>
+                                        <to variable="getItineraryHelperIn" part="SessionID"/>
+                                </copy>
+                        </assign>
+                        <invoke name="HelperGetItinerary" partnerLink="PartnerLink1" operation="getItinerary" portType="ns1:HelperServicePortType" inputVariable="getItineraryHelperIn" outputVariable="getItineraryHelperOut"/>
+                        <assign name="getItineraryStatus">
+                            <copy>
+                                <from>$getItineraryHelperOut.Itinerary/ns4:FlightList</from>
+                                <to>$GetItineraryOut.itinerary/ns4:FlightList</to>
+                            </copy>
+                            <copy>
+                                <from>$getItineraryHelperOut.Itinerary/ns4:HotelList</from>
+                                <to>$GetItineraryOut.itinerary/ns4:HotelList</to>
+                            </copy>
+                            <copy>
+                                <from>$getItineraryHelperOut.Itinerary/ns4:SessionID</from>
+                                <to>$GetItineraryOut.itinerary/ns4:SessionID</to>
+                            </copy>
+                        </assign>
+                        <reply name="ReplyGetItinerary" partnerLink="PlanTrip" operation="getItinerary" portType="ns0:PlanTripPortType" variable="GetItineraryOut"/>
+                    </sequence>
+                </onMessage>
+                <onAlarm>
+                    <for>'P0Y0M0DT0H15M0S'</for>
+                    <assign name="stopSession">
+                        <copy>
+                            <from>false()</from>
+                            <to variable="Session"/>
+                        </copy>
+                    </assign>
+                </onAlarm>
+            </pick>
+        </while>
+    </sequence>
+</process>

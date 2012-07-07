@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns="urn://types.airlinereservation.ws" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="urn://types.fastmoney.imm.dtu.dk" xmlns:tns="urn://cheapbird.ws" name="CheapBird" targetNamespace="urn://cheapbird.ws">
+<wsdl:import namespace="urn://cheapbird.ws" location="CheapBird.wsdl"/>
+<wsdl:service name="CheapBirdService">
+<wsdl:port name="CheapBirdPort" binding="tns:CheapBirdBinding">
+<soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+</wsdl:port>
+</wsdl:service>
+</definitions>

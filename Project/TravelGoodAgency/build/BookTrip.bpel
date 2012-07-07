@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="BookTrip"
+    targetNamespace="urn://booktrip"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:tns="urn://booktrip" xmlns:ns0="urn://types.travelgood.ws" xmlns:ns1="urn://lameduck.ws" xmlns:ns2="urn://cheapbird.ws" xmlns:ns3="urn://types.airlinereservation.ws" xmlns:ns4="urn://booktrip.ws" xmlns:ns5="urn://cancelTrip.ws" xmlns:ns6="urn://niceview.ws" xmlns:ns7="urn://types.niceview.ws">
+    <import namespace="urn://booktrip.ws" location="BookTrip.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://lameduck.ws" location="LameDuck.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://cheapbird.ws" location="CheapBird.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://niceview.ws" location="NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://cancelTrip.ws" location="CancelTrip.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="LameDuck" xmlns:tns="urn://lameduck.ws" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
+        <partnerLink name="CheapBird" xmlns:tns="urn://cheapbird.ws" partnerLinkType="tns:CheapBird" partnerRole="CheapBirdPortTypeRole"/>
+        <partnerLink name="NiceView" xmlns:tns="urn://niceview.ws" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
+        <partnerLink name="CancelTrip" xmlns:tns="urn://cancelTrip.ws" partnerLinkType="tns:CancelTrip" partnerRole="CancelTripPortTypeRole"/>
+        <partnerLink name="BookTrip" xmlns:tns="urn://booktrip.ws" partnerLinkType="tns:BookTrip" myRole="BookTripPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="bookHotleOut" messageType="ns6:bookHotelResponse"/>
+        <variable name="bookHotelIn" messageType="ns6:bookHotelRequest"/>
+        <variable name="cancelItineraryOUt" messageType="ns5:cancelItineraryResponse"/>
+        <variable name="cancelItineraryIn" messageType="ns5:cancelItineraryRequest"/>
+        <variable name="BookItineraryOut" messageType="ns4:bookItineraryResponse"/>
+        <variable name="Status" type="xsd:boolean"/>
+        <variable name="LameDuckBookFlightOut" messageType="ns1:bookFlightResponse"/>
+        <variable name="LameDuckBookFlightIn" messageType="ns1:bookFlightRequest"/>
+        <variable name="CheapBirdBookFlightOut" messageType="ns2:bookFlightResponse"/>
+        <variable name="CheapBirdBookFlightIn" messageType="ns2:bookFlightRequest"/>
+        <variable name="BookItineraryIn" xmlns:tns="urn://booktrip.ws" messageType="tns:bookItineraryRequest"/>
+    </variables>
+    <sequence>
+        <receive name="bookItinerary" createInstance="yes" partnerLink="BookTrip" operation="bookItinerary" xmlns:tns="urn://booktrip.ws" portType="tns:BookTripPortType" variable="BookItineraryIn"/>
+        <assign name="AssignToCancelIn">
+            <copy>
+                <from variable="BookItineraryIn" part="sessionID"/>
+                <to variable="cancelItineraryIn" part="sessionID"/>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.customerInfo/name</from>
+                <to>$cancelItineraryIn.customerInfo/name</to>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.customerInfo/number</from>
+                <to>$cancelItineraryIn.customerInfo/number</to>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.inputItineray/ns0:FlightList</from>
+                <to>$cancelItineraryIn.inputItinerary/ns0:FlightList</to>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.inputItineray/ns0:HotelList</from>
+                <to>$cancelItineraryIn.inputItinerary/ns0:HotelList</to>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.inputItineray/ns0:SessionID</from>
+                <to>$cancelItineraryIn.inputItinerary/ns0:SessionID</to>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.customerInfo/expirationDate/month</from>
+                <to>$cancelItineraryIn.customerInfo/expirationDate/month</to>
+            </copy>
+            <copy>
+                <from>$BookItineraryIn.customerInfo/expirationDate/year</from>
+                <to>$cancelItineraryIn.customerInfo/expirationDate/year</to>
+            </copy>
+        </assign>
+        <forEach name="ForEachFlight" parallel="no" counterName="ForEach1Counter">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>count($BookItineraryIn.inputItineray/ns0:FlightList)</finalCounterValue>
+            <completionCondition>
+                <branches></branches>
+            </completionCondition>
+            <scope name="Scope1">                
+                <sequence name="bookFlight">
+                    <assign name="AssignFlightIT">
+                        <copy>
+                            <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:BookingNo</from>
+                            <to variable="CheapBirdBookFlightIn" part="BookingNo"/>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:BookingNo</from>
+                            <to variable="LameDuckBookFlightIn" part="BookingNo"/>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/number</from>
+                            <to>$CheapBirdBookFlightIn.CreditCardInfo/ns3:number</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/name</from>
+                            <to>$CheapBirdBookFlightIn.CreditCardInfo/ns3:name</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/expirationDate/year</from>
+                            <to>$CheapBirdBookFlightIn.CreditCardInfo/ns3:expirationDate/ns3:year</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/expirationDate/month</from>
+                            <to>$CheapBirdBookFlightIn.CreditCardInfo/ns3:expirationDate/ns3:month</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/expirationDate/month</from>
+                            <to>$LameDuckBookFlightIn.CreditCardInfo/ns3:expirationDate/ns3:month</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/expirationDate/year</from>
+                            <to>$LameDuckBookFlightIn.CreditCardInfo/ns3:expirationDate/ns3:year</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/name</from>
+                            <to>$LameDuckBookFlightIn.CreditCardInfo/ns3:name</to>
+                        </copy>
+                        <copy>
+                            <from>$BookItineraryIn.customerInfo/number</from>
+                            <to>$LameDuckBookFlightIn.CreditCardInfo/ns3:number</to>
+                        </copy>
+                    </assign>
+                    <if name="If1_bookFlight">
+                        <condition>contains($BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:ReservationService, 'LameDuck')</condition>
+                        <sequence name="LameDuck">
+                            <invoke name="LameDuckBookFlight" partnerLink="LameDuck" operation="bookFlight" portType="ns1:LameDuckPortType" inputVariable="LameDuckBookFlightIn" outputVariable="LameDuckBookFlightOut"/>
+                            <assign name="LameDuckStatus">
+                                <copy>
+                                    <from variable="LameDuckBookFlightOut" part="Status"/>
+                                    <to variable="Status"/>
+                                </copy>
+                            </assign>
+                        </sequence>
+                        <else>
+                            <sequence name="Sequence2">
+                                <invoke name="CheapBirdBookFlight" partnerLink="CheapBird" operation="bookFlight" portType="ns2:CheapBirdPortType" inputVariable="CheapBirdBookFlightIn" outputVariable="CheapBirdBookFlightOut"/>
+                                <assign name="CheapBirdStatus">
+                                    <copy>
+                                        <from variable="CheapBirdBookFlightOut" part="Status"/>
+                                        <to variable="Status"/>
+                                    </copy>
+                                </assign>
+                            </sequence>
+                        </else>
+                    </if>
+                    <if name="If2_checkStatus">
+                        <condition>$Status</condition>
+                        <assign name="AssignConfirmed">
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:BookingNo</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:BookingNo</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Price</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Price</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:ReservationService</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:ReservationService</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:From</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:From</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:To</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:To</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:DepartureDate</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:DepartureDate</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:ArrivalDate</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:ArrivalDate</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:Carrier</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo/ns0:Flight/ns0:Carrier</to>
+                            </copy>
+                            <copy>
+                                <from>'confirmed'</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:FlightList[$ForEach1Counter]/ns0:Confirmation</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo</from>
+                                <to>$cancelItineraryIn.inputItinerary/ns0:FlightList[$ForEach1Counter]/ns0:FlightInfo</to>
+                            </copy>
+                            <copy>
+                                <from>'confirmed'</from>
+                                <to>$cancelItineraryIn.inputItinerary/ns0:FlightList[$ForEach1Counter]/ns0:Confirmation</to>
+                            </copy>
+                        </assign>
+                        <else>
+                            <sequence name="Sequence3">
+                                <invoke name="CancelTrip" partnerLink="CancelTrip" operation="cancelItinerary" xmlns:tns="urn://cancelTrip.ws" portType="tns:CancelTripPortType" inputVariable="cancelItineraryIn" outputVariable="cancelItineraryOUt"/>
+                                <assign name="AssignToBookOut">
+                                    <copy>
+                                        <from>false()</from>
+                                        <to variable="BookItineraryOut" part="status"/>
+                                    </copy>
+                                    <copy>
+                                        <from>$cancelItineraryOUt.outItinerary/ns0:FlightList</from>
+                                        <to>$BookItineraryOut.outItinerary/ns0:FlightList</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$cancelItineraryOUt.outItinerary/ns0:HotelList</from>
+                                        <to>$BookItineraryOut.outItinerary/ns0:HotelList</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$cancelItineraryOUt.outItinerary/ns0:SessionID</from>
+                                        <to>$BookItineraryOut.outItinerary/ns0:SessionID</to>
+                                    </copy>
+                                </assign>
+                                <reply name="ReplyBookItinerary" partnerLink="BookTrip" operation="bookItinerary" portType="ns4:BookTripPortType" variable="BookItineraryOut"/>
+                            </sequence>
+                        </else>
+                    </if>
+                </sequence>
+            </scope>
+        </forEach>
+        <forEach name="ForEachHotel" parallel="no" counterName="ForEach1Counter">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>count($BookItineraryIn.inputItineray/ns0:HotelList)</finalCounterValue>
+            <completionCondition>
+                <branches></branches>
+            </completionCondition>
+            <scope name="Scope2">
+                <sequence name="Sequence4">
+                    <assign name="AssignToBookHotel">
+                        <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:HotelList[$ForEach1Counter]/ns0:HotelInfo/ns0:HotelBookingNo</from>
+                                    <to variable="bookHotelIn" part="bookingNum"/>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.customerInfo/expirationDate/month</from>
+                                    <to>$bookHotelIn.creditCardInfo/ns7:expirationDate/ns7:month</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.customerInfo/expirationDate/year</from>
+                                    <to>$bookHotelIn.creditCardInfo/ns7:expirationDate/ns7:year</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.customerInfo/name</from>
+                                    <to>$bookHotelIn.creditCardInfo/ns7:name</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.customerInfo/number</from>
+                                    <to>$bookHotelIn.creditCardInfo/ns7:number</to>
+                            </copy>
+                    </assign>
+                    <invoke name="InvokeBookHotel" partnerLink="NiceView" operation="bookHotel" portType="ns6:NiceViewPortType" inputVariable="bookHotelIn" outputVariable="bookHotleOut"/>
+                    <if name="If1">
+                        <condition>$bookHotleOut.bookingStatus</condition>
+                        <assign name="AssignBookOut">
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:HotelList[$ForEach1Counter]/ns0:HotelInfo</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:HotelList[$ForEach1Counter]/ns0:HotelInfo</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:SessionID</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:SessionID</to>
+                            </copy>
+                            <copy>
+                                <from>'confirmed'</from>
+                                <to>$BookItineraryOut.outItinerary/ns0:HotelList[$ForEach1Counter]/ns0:Confirmation</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:HotelList[$ForEach1Counter]/ns0:HotelInfo</from>
+                                <to>$cancelItineraryIn.inputItinerary/ns0:HotelList[$ForEach1Counter]/ns0:HotelInfo</to>
+                            </copy>
+                            <copy>
+                                <from>$BookItineraryIn.inputItineray/ns0:SessionID</from>
+                                <to>$cancelItineraryIn.inputItinerary/ns0:SessionID</to>
+                            </copy>
+                            <copy>
+                                <from>'confirmed'</from>
+                                <to>$cancelItineraryIn.inputItinerary/ns0:HotelList[$ForEach1Counter]/ns0:Confirmation</to>
+                            </copy>
+                        </assign>
+                        <else>
+                            <sequence name="Sequence5">
+                                <invoke name="InvokeCancelTrip2" partnerLink="CancelTrip" operation="cancelItinerary" portType="ns5:CancelTripPortType" inputVariable="cancelItineraryIn" outputVariable="cancelItineraryOUt"/>
+                                <assign name="Assign1">
+                                    <copy>
+                                        <from>$cancelItineraryOUt.outItinerary/ns0:HotelList</from>
+                                        <to>$BookItineraryOut.outItinerary/ns0:HotelList</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$cancelItineraryOUt.outItinerary/ns0:FlightList</from>
+                                        <to>$BookItineraryOut.outItinerary/ns0:FlightList</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$cancelItineraryOUt.outItinerary/ns0:SessionID</from>
+                                        <to>$BookItineraryOut.outItinerary/ns0:SessionID</to>
+                                    </copy>
+                                    <copy>
+                                        <from>false()</from>
+                                        <to variable="BookItineraryOut" part="status"/>
+                                    </copy>
+                                </assign>
+                                <reply name="ReplyAfterCancelHotel" partnerLink="BookTrip" operation="bookItinerary" portType="ns4:BookTripPortType" variable="BookItineraryOut"/>
+                            </sequence>
+                        </else>
+                    </if>
+                </sequence>
+            </scope>
+        </forEach>
+        <assign name="Assign2">
+            <copy>
+                <from>true()</from>
+                <to variable="BookItineraryOut" part="status"/>
+            </copy>
+        </assign>
+        <reply name="FinalReplyToBookTrip" partnerLink="BookTrip" operation="bookItinerary" portType="ns4:BookTripPortType" variable="BookItineraryOut"/>
+    </sequence>
+</process>

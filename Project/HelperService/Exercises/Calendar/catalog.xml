@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/Calendar/src/java/CalendarWSDL.wsdl" uri="src/conf/xml-resources/web-services/Calendar/wsdl/CalendarWSDL.wsdl"/>
+</catalog>

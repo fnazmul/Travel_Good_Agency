@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="HelperService">
+      <implementation-class>WEBSERVICE.HelperService</implementation-class>
+      <wsdl-url>file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/HelperService/src/java/WSDL/HelperService.wsdl</wsdl-url>
+      <local-wsdl-file>HelperService.wsdl</local-wsdl-file>
+      <service-name>HelperServiceService</service-name>
+      <port-name>HelperServicePort</port-name>
+      <package-name>ws.helperservice</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>false</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
+  </services>
+  <clients/>
+</jax-ws>

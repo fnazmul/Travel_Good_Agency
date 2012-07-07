@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="urn://cancelTrip.ws" xmlns:ns10="urn://helperservice.ws" xmlns:ns2="http://enterprise.netbeans.org/bpel/TravelGood/CancelTrip" xmlns:ns3="urn://plantrip.ws" xmlns:ns4="urn://PlanTripService.ws" xmlns:ns5="urn://booktrip.ws" xmlns:ns6="urn://booktrip" xmlns:ns7="urn://lameduck.ws" xmlns:ns8="urn://cheapbird.ws" xmlns:ns9="urn://niceview.ws" version="1.0">
+    <services binding-component="true">
+        <provides endpoint-name="LameDuckPort" interface-name="ns7:LameDuckPortType" service-name="ns7:LameDuckService"/>
+        <provides endpoint-name="CheapBirdPort" interface-name="ns8:CheapBirdPortType" service-name="ns8:CheapBirdService"/>
+        <provides endpoint-name="NiceViewPort" interface-name="ns9:NiceViewPortType" service-name="ns9:NiceViewService"/>
+        <provides endpoint-name="HelperServicePort" interface-name="ns10:HelperServicePortType" service-name="ns10:HelperServiceService"/>
+        <consumes endpoint-name="CancelTripPort" interface-name="ns1:CancelTripPortType" service-name="ns1:CancelTripService"/>
+        <consumes endpoint-name="CallbackPlanTripPortTypeBindingPort" interface-name="ns3:CallbackPlanTripPortType" service-name="ns3:CallbackPlanTripService"/>
+        <consumes endpoint-name="PlanTripPort" interface-name="ns3:PlanTripPortType" service-name="ns3:PlanTripService"/>
+        <consumes endpoint-name="BookTripPort" interface-name="ns5:BookTripPortType" service-name="ns5:BookTripService"/>
+    </services>
+</jbi>

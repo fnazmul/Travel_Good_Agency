@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PlanTrip" targetNamespace="urn://plantrip.ws"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://plantrip.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="urn://types.travelgood.ws" xmlns:ns2="urn://lameduck.ws" xmlns:ns0="urn://cheapbird.ws" xmlns:ns3="urn://niceview.ws" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop">
+    <import location="LameDuck.wsdl" namespace="urn://lameduck.ws"/>
+    <import location="CheapBird.wsdl" namespace="urn://cheapbird.ws"/>
+    <import location="NiceView.wsdl" namespace="urn://niceview.ws"/>
+    <types>
+        <xsd:schema targetNamespace="urn://plantrip.ws" xmlns:ns1="urn://types.travelgood.ws">
+            <xsd:import namespace="urn://types.travelgood.ws" schemaLocation="Itinerary.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="startPlanningRequest">
+        <part name="input" type="xsd:string"/>
+    </message>
+    <message name="startPlanningResponse">
+        <part name="sessionID" type="xsd:string"/>
+    </message>
+    <message name="getFlightsRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="searchFlight" type="ns1:SearchFlight"/>
+    </message>
+    <message name="getFlightsResponse">
+        <part name="flightList" type="ns1:FlightList"/>
+    </message>
+    <message name="addFlightToItineraryRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="flightInfo" type="ns1:FlightInfo"/>
+    </message>
+    <message name="addFlightToItineraryResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+    <message name="getHotelsRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="searchHotel" type="ns1:SearchHotel"/>
+    </message>
+    <message name="getHotelsResponse">
+        <part name="hotelList" type="ns1:HotelList"/>
+    </message>
+    <message name="addHotelToItineraryRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="hotel" type="ns1:Hotel"/>
+    </message>
+    <message name="addHotelToItineraryResponse">
+        <part name="status" type="xsd:string"/>
+    </message>
+    <message name="getItineraryRequest">
+        <part name="sessionID" type="xsd:string"/>
+    </message>
+    <message name="getItineraryResponse">
+        <part name="itinerary" type="ns1:Itinerary"/>
+    </message>
+    <message name="flightListLameDuckRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="flightListLameDuck" type="ns1:FlightList"/>
+    </message>
+    <message name="flightListCheapBirdRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="flightListCheapBird" type="ns1:FlightList"/>
+    </message>
+    <message name="hotelListNiceViewRequest">
+        <part name="sessionID" type="xsd:string"/>
+        <part name="hotelListNiceView" type="ns1:HotelList"/>
+    </message>
+    <portType name="PlanTripPortType">
+        <operation name="startPlanning">
+            <input name="input1" message="tns:startPlanningRequest"/>
+            <output name="output1" message="tns:startPlanningResponse"/>
+        </operation>
+        <operation name="getFlights">
+            <input name="input2" message="tns:getFlightsRequest"/>
+            <output name="output2" message="tns:getFlightsResponse"/>
+        </operation>
+        <operation name="addFlightToItinerary">
+            <input name="input3" message="tns:addFlightToItineraryRequest"/>
+            <output name="output3" message="tns:addFlightToItineraryResponse"/>
+        </operation>
+        <operation name="getHotels">
+            <input name="input4" message="tns:getHotelsRequest"/>
+            <output name="output4" message="tns:getHotelsResponse"/>
+        </operation>
+        <operation name="addHotelToItinerary">
+            <input name="input5" message="tns:addHotelToItineraryRequest"/>
+            <output name="output5" message="tns:addHotelToItineraryResponse"/>
+        </operation>
+        <operation name="getItinerary">
+            <input name="input6" message="tns:getItineraryRequest"/>
+            <output name="output6" message="tns:getItineraryResponse"/>
+        </operation>
+    </portType>
+    <portType name="CallbackPlanTripPortType">
+        <operation name="flightListLameDuck">
+            <input name="input1" message="tns:flightListLameDuckRequest"/>
+        </operation>
+        <operation name="flightListCheapBird">
+            <input name="input2" message="tns:flightListCheapBirdRequest"/>
+        </operation>
+        <operation name="hotelListNiceView">
+            <input name="input3" message="tns:hotelListNiceViewRequest"/>
+        </operation>
+    </portType>
+    <binding name="PlanTripBinding" type="tns:PlanTripPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="startPlanning">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </output>
+        </operation>
+        <operation name="getFlights">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </output>
+        </operation>
+        <operation name="addFlightToItinerary">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </output>
+        </operation>
+        <operation name="getHotels">
+            <soap:operation/>
+            <input name="input4">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+            <output name="output4">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </output>
+        </operation>
+        <operation name="addHotelToItinerary">
+            <soap:operation/>
+            <input name="input5">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+            <output name="output5">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </output>
+        </operation>
+        <operation name="getItinerary">
+            <soap:operation/>
+            <input name="input6">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+            <output name="output6">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </output>
+        </operation>
+    </binding>
+    <binding name="CallbackPlanTripPortTypeBinding" type="tns:CallbackPlanTripPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="flightListLameDuck">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="urn://plantrip.ws"/>
+            </input>
+        </operation>
+        <operation name="flightListCheapBird">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body namespace="urn://plantrip.ws" use="literal"/>
+            </input>
+        </operation>
+        <operation name="hotelListNiceView">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body namespace="urn://plantrip.ws" use="literal"/>
+            </input>
+        </operation>
+    </binding>
+    <service name="PlanTripService">
+        <port name="PlanTripPort" binding="tns:PlanTripBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/PlanTripService/PlanTripPort"/>
+        </port>
+    </service>
+    <service name="CallbackPlanTripService">
+        <port name="CallbackPlanTripPortTypeBindingPort" binding="tns:CallbackPlanTripPortTypeBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/CallbackPlanTripService/CallbackPlanTripPortTypeBindingPort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="PlanTrip">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="PlanTripPortTypeRole" portType="tns:PlanTripPortType"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="PlanTripCallback">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes.
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="CallbackPlanTripPortTypeRole" portType="tns:CallbackPlanTripPortType"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="PlanTrip_LameDuck">
+        <plnk:role name="callLameDuck" portType="ns2:LameDuckPortType"/>
+        <plnk:role name="callbackFromLameDuck" portType="tns:CallbackPlanTripPortType"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="PlanTrip_CheapBird">
+        <plnk:role name="callCheapBird" portType="ns0:CheapBirdPortType"/>
+        <plnk:role name="callbackFromCheapBird" portType="tns:CallbackPlanTripPortType"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="PlanTrip_NiceView">
+        <plnk:role name="callNiceView" portType="ns3:NiceViewPortType"/>
+        <plnk:role name="callbackFromNiceView" portType="tns:CallbackPlanTripPortType"/>
+    </plnk:partnerLinkType>
+    <vprop:property name="sessionID" type="xsd:string"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:startPlanningResponse" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:getFlightsRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:addFlightToItineraryRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:getHotelsRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:addHotelToItineraryRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:getItineraryRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:flightListLameDuckRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:flightListCheapBirdRequest" part="sessionID"/>
+    <vprop:propertyAlias propertyName="tns:sessionID" messageType="tns:hotelListNiceViewRequest" part="sessionID"/>
+</definitions>

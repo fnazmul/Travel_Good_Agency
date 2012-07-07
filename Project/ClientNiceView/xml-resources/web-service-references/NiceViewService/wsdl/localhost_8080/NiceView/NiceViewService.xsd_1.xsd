@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.3.1-hudson-749-SNAPSHOT. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://types.niceview.ws" targetNamespace="urn://types.niceview.ws" elementFormDefault="qualified">
+    <xsd:complexType name="Hotel">
+        <xsd:sequence>
+            <xsd:element name="HotelName" type="xsd:string"></xsd:element>
+            <xsd:element name="HotelAddress" type="tns:HotelAddress"></xsd:element>
+            <xsd:element name="HotelBookingNo" type="xsd:string"></xsd:element>
+            <xsd:element name="HotelPrice" type="xsd:float"></xsd:element>
+            <xsd:element name="HotelCreditGurantee" type="xsd:boolean"></xsd:element>
+            <xsd:element name="HotelReservationService" type="xsd:string"></xsd:element>
+
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SearchHotel">
+        <xsd:sequence>
+            <xsd:element name="city" type="xsd:string"></xsd:element>
+            <xsd:element name="ArrivalDate" type="xsd:date"></xsd:element>
+            <xsd:element name="DepartureDate" type="xsd:date"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="HotelList">
+        <xsd:sequence maxOccurs="unbounded" minOccurs="1">
+            <xsd:element name="HotelList" type="tns:Hotel" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="HotelAddress">
+        <xsd:sequence>
+            <xsd:element name="Street" type="xsd:string"></xsd:element>
+            <xsd:element name="City" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="HotelAddress" type="tns:HotelAddress"></xsd:element>
+    <xsd:element name="Hotel" type="tns:Hotel"></xsd:element>
+    <xsd:element name="HotelList" type="tns:HotelList"></xsd:element>
+    <xsd:element name="SearchHotel" type="tns:SearchHotel"></xsd:element>
+    <xsd:complexType name="creditCardInfoType">
+        <xsd:sequence>
+            <xsd:element name="expirationDate" type="tns:expirationDateType"></xsd:element>
+            <xsd:element name="name" type="xsd:string"></xsd:element>
+            <xsd:element name="number" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="expirationDateType">
+        <xsd:sequence>
+            <xsd:element name="month" type="xsd:int"></xsd:element>
+            <xsd:element name="year" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

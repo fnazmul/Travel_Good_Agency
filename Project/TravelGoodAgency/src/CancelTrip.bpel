@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="CancelTrip"
+    targetNamespace="http://enterprise.netbeans.org/bpel/TravelGood/CancelTrip"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/TravelGood/CancelTrip" xmlns:ns0="urn://cancelTrip.ws" xmlns:ns1="urn://lameduck.ws" xmlns:ns2="urn://cheapbird.ws" xmlns:ns3="urn://niceview.ws" xmlns:ns4="urn://types.travelgood.ws" xmlns:ns5="urn://types.airlinereservation.ws">
+    <import namespace="urn://cancelTrip.ws" location="CancelTrip.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://lameduck.ws" location="LameDuck.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://cheapbird.ws" location="CheapBird.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="urn://niceview.ws" location="NiceView.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="LameDuck" xmlns:tns="urn://lameduck.ws" partnerLinkType="tns:LameDuck" partnerRole="LameDuckPortTypeRole"/>
+        <partnerLink name="CheapBird" xmlns:tns="urn://cheapbird.ws" partnerLinkType="tns:CheapBird" partnerRole="CheapBirdPortTypeRole"/>
+        <partnerLink name="NiceView" xmlns:tns="urn://niceview.ws" partnerLinkType="tns:NiceView" partnerRole="NiceViewPortTypeRole"/>
+        <partnerLink name="CancelTrip" xmlns:tns="urn://cancelTrip.ws" partnerLinkType="tns:CancelTrip" myRole="CancelTripPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="Status" type="xsd:boolean"/>
+        <variable name="cancelLameDuckOut" messageType="ns1:cancelFlightResponse"/>
+        <variable name="cancelNiceViewOut" messageType="ns3:cancelHotelResponse"/>
+        <variable name="cancelNiceViewIn" messageType="ns3:cancelHotelRequest"/>
+        <variable name="cancelCheapBirdOut" messageType="ns2:cancelFlightResponse"/>
+        <variable name="cancelCheapBirdIn" messageType="ns2:cancelFlightRequest"/>
+        <variable name="cancelLameDuckIn" messageType="ns1:cancelFlightRequest"/>
+        <variable name="cancelItineraryOut" messageType="ns0:cancelItineraryResponse"/>
+        <variable name="cancelItineraryIn" xmlns:tns="urn://cancelTrip.ws" messageType="tns:cancelItineraryRequest"/>
+    </variables>
+    <sequence>
+        <receive name="ReceiveCancelTrip" createInstance="yes" partnerLink="CancelTrip" operation="cancelItinerary" xmlns:tns="urn://cancelTrip.ws" portType="tns:CancelTripPortType" variable="cancelItineraryIn"/>
+        <forEach name="ForEachFlight" parallel="no" counterName="ForEach1Counter">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>count($cancelItineraryIn.inputItinerary/ns4:FlightList)</finalCounterValue>
+            <scope name="Scope1">
+                <sequence name="Sequence3">
+                    <if name="IfconfirmedFlight">
+                        <condition>starts-with($cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:Confirmation, 'confirmed')</condition>
+                        <sequence name="Sequence4">
+                            <if name="If_CB_LD">
+                                <condition>starts-with($cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo/ns4:ReservationService, 'LameDuck')</condition>
+                                    <sequence name="Sequence1">
+                                        <assign name="AssignLDin">
+                                                <copy>
+                                                        <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo/ns4:BookingNo</from>
+                                                            <to variable="cancelLameDuckIn" part="BookingNo"/>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>$cancelItineraryIn.customerInfo/name</from>
+                                                            <to>$cancelLameDuckIn.CreditCardInfo/ns5:name</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>$cancelItineraryIn.customerInfo/expirationDate/month</from>
+                                                            <to>$cancelLameDuckIn.CreditCardInfo/ns5:expirationDate/ns5:month</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>$cancelItineraryIn.customerInfo/expirationDate/year</from>
+                                                            <to>$cancelLameDuckIn.CreditCardInfo/ns5:expirationDate/ns5:year</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>$cancelItineraryIn.customerInfo/number</from>
+                                                            <to>$cancelLameDuckIn.CreditCardInfo/ns5:number</to>
+                                                    </copy>
+                                            </assign>
+                                            <invoke name="InvokeLD" partnerLink="LameDuck" operation="cancelFlight" portType="ns1:LameDuckPortType" inputVariable="cancelLameDuckIn" outputVariable="cancelLameDuckOut"/>
+                                            <assign name="AssignStatusLD">
+                                                <copy>
+                                                        <from variable="cancelLameDuckOut" part="Status"/>
+                                                            <to variable="Status"/>
+                                                    </copy>
+                                            </assign>
+                                    </sequence>
+                                    <else>
+                                        <sequence name="Sequence2">
+                                                <assign name="AssignCBin">
+                                                        <copy>
+                                                                <from>$cancelItineraryIn.customerInfo/expirationDate/month</from>
+                                                                    <to>$cancelCheapBirdIn.CreditCardInfo/ns5:expirationDate/ns5:month</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$cancelItineraryIn.customerInfo/expirationDate/year</from>
+                                                                    <to>$cancelCheapBirdIn.CreditCardInfo/ns5:expirationDate/ns5:year</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$cancelItineraryIn.customerInfo/name</from>
+                                                                    <to>$cancelCheapBirdIn.CreditCardInfo/ns5:name</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$cancelItineraryIn.customerInfo/number</from>
+                                                                    <to>$cancelCheapBirdIn.CreditCardInfo/ns5:number</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo/ns4:BookingNo</from>
+                                                                    <to variable="cancelCheapBirdIn" part="BookingNo"/>
+                                                            </copy>
+                                                    </assign>
+                                                    <invoke name="InvokeCB" partnerLink="CheapBird" operation="cancelFlight" portType="ns2:CheapBirdPortType" inputVariable="cancelCheapBirdIn" outputVariable="cancelCheapBirdOut"/>
+                                                    <assign name="AssignStatusCB">
+                                                        <copy>
+                                                                <from variable="cancelCheapBirdOut" part="Status"/>
+                                                                    <to variable="Status"/>
+                                                            </copy>
+                                                    </assign>
+                                            </sequence>
+                                    </else>
+                            </if>
+                            <if name="Ifsuccess">
+                                <condition>$Status</condition>
+                                <assign name="AssignCancelled">
+                                    <copy>
+                                        <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo</from>
+                                        <to>$cancelItineraryOut.outItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo</to>
+                                    </copy>
+                                    <copy>
+                                        <from>'cancelled'</from>
+                                        <to>$cancelItineraryOut.outItinerary/ns4:FlightList[$ForEach1Counter]/ns4:Confirmation</to>
+                                    </copy>
+                                </assign>
+                                <else>
+                                    <assign name="AssignSame">
+                                        <copy>
+                                            <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo</from>
+                                            <to>$cancelItineraryOut.outItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo</to>
+                                        </copy>
+                                        <copy>
+                                            <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:Confirmation</from>
+                                            <to>$cancelItineraryOut.outItinerary/ns4:FlightList[$ForEach1Counter]/ns4:Confirmation</to>
+                                        </copy>
+                                    </assign>
+                                </else>
+                            </if>
+                        </sequence>
+                        <else>
+                            <assign name="Assign1">
+                                <copy>
+                                    <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo</from>
+                                    <to>$cancelItineraryOut.outItinerary/ns4:FlightList[$ForEach1Counter]/ns4:FlightInfo</to>
+                                </copy>
+                                <copy>
+                                    <from>$cancelItineraryIn.inputItinerary/ns4:FlightList[$ForEach1Counter]/ns4:Confirmation</from>
+                                    <to>$cancelItineraryOut.outItinerary/ns4:FlightList[$ForEach1Counter]/ns4:Confirmation</to>
+                                </copy>
+                            </assign>
+                        </else>
+                    </if>
+                </sequence>
+            </scope>
+        </forEach>
+        <forEach name="ForEachHotel" parallel="no" counterName="ForEach1Counter">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>count($cancelItineraryIn.inputItinerary/ns4:HotelList)</finalCounterValue>
+            <completionCondition>
+                <branches></branches>
+            </completionCondition>
+            <scope name="Scope2">
+                <sequence name="Sequence6">
+                    <if name="IfconfirmedHotel">
+                        <condition>starts-with($cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:Confirmation, 'confirmed')</condition>
+                            <sequence name="Sequence5">
+                                <assign name="AssignHotel">
+                                        <copy>
+                                                <from>$cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo/ns4:HotelBookingNo</from>
+                                                    <to variable="cancelNiceViewIn" part="bookingNum"/>
+                                            </copy>
+                                    </assign>
+                                    <invoke name="InvokeNiceViewCancel" partnerLink="NiceView" operation="cancelHotel" portType="ns3:NiceViewPortType" inputVariable="cancelNiceViewIn" outputVariable="cancelNiceViewOut"/>
+                                <if name="If2">
+                                    <condition>$cancelNiceViewOut.cancelStatus</condition>
+                                        <assign name="AssignCancelled">
+                                            <copy>
+                                                <from>$cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo</from>
+                                                <to>$cancelItineraryOut.outItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo</to>
+                                            </copy>
+                                            <copy>
+                                                <from>'cancelled'</from>
+                                                <to>$cancelItineraryOut.outItinerary/ns4:HotelList[$ForEach1Counter]/ns4:Confirmation</to>
+                                            </copy>
+                                        </assign>
+                                    <else>
+                                        <assign name="AssignSame3">
+                                            <copy>
+                                                <from>$cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:Confirmation</from>
+                                                <to>$cancelItineraryOut.outItinerary/ns4:HotelList[$ForEach1Counter]/ns4:Confirmation</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo</from>
+                                                <to>$cancelItineraryOut.outItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo</to>
+                                            </copy>
+                                        </assign>
+                                    </else>
+                                </if>
+                            </sequence>
+                            <else>
+                                <assign name="AssignSame2">
+                                        <copy>
+                                                <from>$cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo</from>
+                                                    <to>$cancelItineraryOut.outItinerary/ns4:HotelList[$ForEach1Counter]/ns4:HotelInfo</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$cancelItineraryIn.inputItinerary/ns4:HotelList[$ForEach1Counter]/ns4:Confirmation</from>
+                                                    <to>$cancelItineraryOut.outItinerary/ns4:HotelList[$ForEach1Counter]/ns4:Confirmation</to>
+                                            </copy>
+                                    </assign>
+                            </else>
+                    </if>
+                </sequence>
+            </scope>
+        </forEach>
+        <assign name="Assign2">
+            <copy>
+                <from>$cancelItineraryIn.inputItinerary/ns4:SessionID</from>
+                <to>$cancelItineraryOut.outItinerary/ns4:SessionID</to>
+            </copy>
+            <copy>
+                <from>true()</from>
+                <to variable="cancelItineraryOut" part="status"/>
+            </copy>
+        </assign>
+        <reply name="ReplyCancelItinerary" partnerLink="CancelTrip" operation="cancelItinerary" portType="ns0:CancelTripPortType" variable="cancelItineraryOut"/>
+    </sequence>
+</process>

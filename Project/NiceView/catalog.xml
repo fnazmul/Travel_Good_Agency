@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/WSDL/NiceView.wsdl" uri="src/conf/xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/XSD/Hotel.xsd" uri="src/conf/xml-resources/web-services/NiceView/XSD/Hotel.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/NiceView/src/java/XSD/BankService.xsd" uri="src/conf/xml-resources/web-services/NiceView/XSD/BankService.xsd"/>
+    <system systemId="file:/D:/WebService/_Project/NiceView/src/java/XSD/Hotel.xsd" uri="src/conf/xml-resources/web-services/NiceView/XSD/Hotel.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="file:/D:/WebService/_Project/NiceView/src/java/WSDL/NiceView.wsdl" uri="src/conf/xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
+    <system systemId="file:/D:/WebService/_Project/NiceView/src/java/WSDL/Hotel.xsd" uri="src/conf/xml-resources/web-services/NiceView/wsdl/Hotel.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/PlanTrip.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/PlanTrip.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Itinerary.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Itinerary.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/LameDuck.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/CheapBird.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/CheapBird.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/NiceView.wsdl" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/NiceView.wsdl"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Flight.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Flight.xsd"/>
+    <system systemId="file:/C:/Users/FarihaMuna/Documents/NetBeansProjects/TravelGood/src/Hotel.xsd" uri="src/conf/xml-resources/web-service-references/PlanTrip/wsdl/Hotel.xsd"/>
+</catalog>

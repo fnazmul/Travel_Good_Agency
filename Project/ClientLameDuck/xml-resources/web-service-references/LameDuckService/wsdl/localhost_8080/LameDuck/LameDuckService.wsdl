@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.3.1-hudson-749-SNAPSHOT. --><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn://lameduck.ws" xmlns:ns="urn://types.airlinereservation.ws" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="urn://types.fastmoney.imm.dtu.dk" name="LameDuck" targetNamespace="urn://lameduck.ws">
+    <types>
+        <xsd:schema xmlns:ns0="urn://types.airlinereservation.ws" targetNamespace="urn://lameduck.ws">
+            <xsd:import schemaLocation="http://localhost:8080/LameDuck/LameDuckService?xsd=1" namespace="urn://types.airlinereservation.ws"></xsd:import>
+        </xsd:schema>
+    </types>
+    <message name="getFlightsRequest">
+        <part name="SearchFlight" type="ns:SearchFlight"></part>
+        <part name="SessionID" type="xsd:string"></part>
+    </message>
+    <message name="bookFlightRequest">
+        <part name="BookingNo" type="xsd:string"></part>
+        <part name="CreditCardInfo" type="ns:creditCardInfoType"></part>
+    </message>
+    <message name="bookFlightResponse">
+        <part name="Status" type="xsd:boolean"></part>
+    </message>
+    <message name="cancelFlightRequest">
+        <part name="BookingNo" type="xsd:string"></part>
+        <part name="CreditCardInfo" type="ns:creditCardInfoType"></part>
+    </message>
+    <message name="cancelFlightResponse">
+        <part name="Status" type="xsd:boolean"></part>
+    </message>
+    <portType name="LameDuckPortType">
+        <operation name="getFlights">
+            <input name="input1" message="tns:getFlightsRequest"></input>
+        </operation>
+        <operation name="bookFlight">
+            <input name="input2" message="tns:bookFlightRequest"></input>
+            <output name="output1" message="tns:bookFlightResponse"></output>
+        </operation>
+        <operation name="cancelFlight">
+            <input name="input3" message="tns:cancelFlightRequest"></input>
+            <output name="output2" message="tns:cancelFlightResponse"></output>
+        </operation>
+    </portType>
+    <binding name="LameDuckBinding" type="tns:LameDuckPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+        <operation name="getFlights">
+            <soap:operation></soap:operation>
+            <input name="input1">
+                <soap:body use="literal" namespace="urn://lameduck.ws"></soap:body>
+            </input>
+        </operation>
+        <operation name="bookFlight">
+            <soap:operation></soap:operation>
+            <input name="input2">
+                <soap:body use="literal" namespace="urn://lameduck.ws"></soap:body>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="urn://lameduck.ws"></soap:body>
+            </output>
+        </operation>
+        <operation name="cancelFlight">
+            <soap:operation></soap:operation>
+            <input name="input3">
+                <soap:body use="literal" namespace="urn://lameduck.ws"></soap:body>
+            </input>
+            <output name="output2">
+                <soap:body use="literal" namespace="urn://lameduck.ws"></soap:body>
+            </output>
+        </operation>
+    </binding>
+    <service name="LameDuckService">
+        <port name="LameDuckPort" binding="tns:LameDuckBinding">
+            <soap:address location="http://localhost:8080/LameDuck/LameDuckService"></soap:address>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="LameDuck">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="LameDuckPortTypeRole" portType="tns:LameDuckPortType"></plnk:role>
+    </plnk:partnerLinkType>
+</definitions>
